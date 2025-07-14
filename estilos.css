@@ -1,0 +1,60 @@
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: #ffeef2;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.pantalla {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.oculto {
+  display: none;
+}
+
+h1, h2 {
+  color: #ff88a0;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #ffb6c1;
+  border: 2px solid #ff88a0;
+  color: #333;
+  padding: 10px 20px;
+  margin: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #fcd0d5;
+}
+
+.menu-juego {
+  margin-top: 30px;
+}
+
+#info-paciente {
+  font-size: 14px;
+  background: #fff3f7;
+  border: 2px dashed #ff88a0;
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 80%;
+  border-radius: 8px;
+}
+
+#contenido, #opciones {
+  margin: 20px;
+}
