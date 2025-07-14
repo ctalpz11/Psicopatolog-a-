@@ -15,74 +15,87 @@ function ocultarTodas() {
   document.querySelectorAll(".pantalla").forEach(p => p.classList.add("oculto"));
 }
 
-function cargarCategoria(cat) {
-  categoriaActual = cat;
-  cambiarPaciente();
-  document.getElementById("pantalla-juego").classList.remove("oculto");
+const categorias = {
+  "Trastornos del Estado del Ánimo": [
+    {
+      nombre: "Ana, 20 años – “Todo me da igual”",
+      sintomas: [
+        "Ánimo deprimido casi todo el día",
+        "Anhedonia (no disfruta nada)",
+        "Fatiga constante",
+        "Ideas de inutilidad",
+        "Insomnio de conciliación",
+        "Pérdida de peso sin dieta"
+      ],
+      preguntas: [
+        { pregunta: "¿Cuánto tiempo llevas sintiéndote así?", respuesta: "Unos dos meses, todos los días." },
+        { pregunta: "¿Has tenido pensamientos de hacerte daño?", respuesta: "Sí, a veces pienso que no vale la pena vivir." },
+        { pregunta: "¿Has tenido momentos en que te sientes súper feliz sin razón?", respuesta: "No, nada me alegra últimamente." }
+      ],
+      diagnosticos: [
+        { texto: "Trastorno Depresivo Mayor", correcto: true },
+        { texto: "Distimia", correcto: false },
+        { texto: "Trastorno Adaptativo con estado de ánimo deprimido", correcto: false }
+      ]
+    }
+    // Puedes añadir más pacientes aquí
+  ]
+};
+
+let categoriaActual = null;
+let pacienteActual = 0;
+
+function mostrarMenu() {
+  document.body.innerHTML = `
+    <div class="menu">
+      <h1>Simulador de Psicopatologías</h1>
+      <p>Elige una categoría:</p>
+      <ul>
+        ${Object.keys(categorias).map(cat => `<li><button onclick="iniciarCategoria('${cat}')">${cat}</button></li>`).join("")}
+      </ul>
+    </div>
+  `;
 }
 
-function cambiarPaciente() {
-  const lista = pacientes[categoriaActual];
-  pacienteActual = lista[Math.floor(Math.random() * lista.length)];
+function iniciarCategoria(nombreCategoria) {
+  categoriaActual = categorias[nombreCategoria];
+  pacienteActual = 0;
   mostrarPaciente();
 }
 
 function mostrarPaciente() {
-  const info = document.getElementById("info-paciente");
-  const contenido = document.getElementById("contenido");
-  const opciones = document.getElementById("opciones");
-
-  info.innerHTML = `
-    <strong>Paciente:</strong> ${pacienteActual.nombre}, ${pacienteActual.edad} años<br>
-    <strong>Antecedentes:</strong> ${pacienteActual.antecedentes}
-    <br><strong>Síntomas:</strong><ul>${pacienteActual.sintomas.map(s => `<li>${s}</li>`).join("")}</ul>
-  `;
-
-  contenido.innerHTML = `<p>¿Qué pregunta clínica deseas hacer?</p>`;
-  opciones.innerHTML = "";
-
-  pacienteActual.preguntas_clave.forEach((p, i) => {
-    const btn = document.createElement("button");
-    btn.textContent = p.texto;
-    btn.onclick = () => evaluarPregunta(p.correcta);
-    opciones.appendChild(btn);
-  });
-}
-
-function evaluarPregunta(correcta) {
-  const contenido = document.getElementById("contenido");
-  const opciones = document.getElementById("opciones");
-
-  if (correcta) {
-    contenido.innerHTML = `<p>✔️ Buena elección. ¿Cuál es el diagnóstico?</p>`;
-    opciones.innerHTML = "";
-
-    const opcionesDiag = [pacienteActual.diagnostico_correcto, ...pacienteActual.distractores];
-    opcionesDiag.sort(() => Math.random() - 0.5);
-
-    opcionesDiag.forEach(d => {
-      const btn = document.createElement("button");
-      btn.textContent = d;
-      btn.onclick = () => evaluarDiagnostico(d);
-      opciones.appendChild(btn);
-    });
-  } else {
-    contenido.innerHTML = `<p>❌ Esa pregunta no ayudó. El caso se complica... intenta otra.</p>`;
-  }
-}
-
-function evaluarDiagnostico(seleccionado) {
-  const contenido = document.getElementById("contenido");
-  const opciones = document.getElementById("opciones");
-
-  if (seleccionado === pacienteActual.diagnostico_correcto) {
-    contenido.innerHTML = `<p>🎉 ¡Correcto! Has diagnosticado con éxito a ${pacienteActual.nombre}.</p>`;
-  } else {
-    contenido.innerHTML = `<p>💔 ${pacienteActual.nombre} se sintió incomprendida. Era: <strong>${pacienteActual.diagnostico_correcto}</strong>.</p>`;
+  const paciente = categoriaActual[pacienteActual];
+  if (!paciente) {
+    document.body.innerHTML = `<h2>¡Has terminado todos los pacientes de esta categoría!</h2><button onclick="mostrarMenu()">Volver al menú</button>`;
+    return;
   }
 
-  opciones.innerHTML = `
-    <button onclick="cambiarPaciente()">🔄 Otro paciente</button>
-    <button onclick="mostrarMenu()">🏠 Menú</button>
+  document.body.innerHTML = `
+    <div class="caso">
+      <h2>${paciente.nombre}</h2>
+      <h3>Síntomas:</h3>
+      <ul>${paciente.sintomas.map(s => `<li>${s}</li>`).join("")}</ul>
+      <h3>Preguntas:</h3>
+      <ul>${paciente.preguntas.map(p => `<li><strong>${p.pregunta}</strong><br><em>📣 ${p.respuesta}</em></li>`).join("")}</ul>
+      <h3>Diagnóstico:</h3>
+      <div class="diagnosticos">
+        ${paciente.diagnosticos.map((d, i) => `<button onclick="verificarDiagnostico(${i})">${d.texto}</button>`).join("")}
+      </div>
+      <button onclick="mostrarMenu()">Volver al menú</button>
+    </div>
   `;
 }
+
+function verificarDiagnostico(indice) {
+  const diagnostico = categoriaActual[pacienteActual].diagnosticos[indice];
+  const mensaje = diagnostico.correcto
+    ? "✅ ¡Diagnóstico correcto! El paciente ha sido atendido exitosamente."
+    : "❌ Diagnóstico incorrecto. El paciente se sintió incomprendido.";
+
+  alert(mensaje);
+  pacienteActual++;
+  mostrarPaciente();
+}
+
+// Inicia el juego
+mostrarMenu();
