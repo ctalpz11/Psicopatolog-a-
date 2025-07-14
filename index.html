@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>CliniSim - Juego de Diagnóstico Psicológico</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <div id="pantalla-inicio" class="pantalla">
+    <h1>🎮 CliniSim</h1>
+    <p>Simulador de Diagnóstico Psicológico</p>
+    <button onclick="mostrarMenu()">Comenzar</button>
+  </div>
+
+  <div id="pantalla-menu" class="pantalla oculto">
+    <h2>Selecciona una categoría</h2>
+    <button onclick="cargarCategoria('estado_animo')">Estado del Ánimo</button>
+    <button onclick="volverInicio()">⬅ Volver</button>
+  </div>
+
+  <div id="pantalla-juego" class="pantalla oculto">
+    <div id="info-paciente"></div>
+    <div id="contenido"></div>
+    <div id="opciones"></div>
+    <div class="menu-juego">
+      <button onclick="cambiarPaciente()">🔄 Otro paciente</button>
+      <button onclick="mostrarMenu()">🏠 Menú</button>
+    </div>
+  </div>
+
+  <script src="pacientes.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
