@@ -1,60 +1,58 @@
+/* Fuente pixelada (puedes usar "Press Start 2P" desde Google Fonts si quieres más estilo retro) */
 body {
-  font-family: 'Press Start 2P', cursive;
-  background-color: #ffeef2;
-  color: #333;
+  font-family: 'Courier New', monospace;
+  background-color: #fff0f3;
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  color: #5a3b5d;
+}
+
+h1, h2, h3 {
+  color: #ff9eb5;
   text-align: center;
 }
 
-.pantalla {
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+.menu, .caso {
+  background-color: #ffd6e8;
+  border: 2px solid #d6b5f3;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 4px 4px 0 #ffb4c1;
 }
 
-.oculto {
-  display: none;
-}
-
-h1, h2 {
-  color: #ff88a0;
-  margin-bottom: 20px;
+ul {
+  list-style-type: "💉 ";
+  padding-left: 20px;
 }
 
 button {
-  background-color: #ffb6c1;
-  border: 2px solid #ff88a0;
-  color: #333;
-  padding: 10px 20px;
-  margin: 10px;
-  font-family: 'Press Start 2P', cursive;
-  font-size: 12px;
-  border-radius: 10px;
+  background-color: #ffb4c1;
+  border: 2px solid #d6b5f3;
+  padding: 10px 15px;
+  font-weight: bold;
+  color: #5a3b5d;
+  margin: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 button:hover {
-  background-color: #fcd0d5;
+  background-color: #ffc9da;
+  transform: scale(1.05);
 }
 
-.menu-juego {
-  margin-top: 30px;
+.diagnosticos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-#info-paciente {
-  font-size: 14px;
-  background: #fff3f7;
-  border: 2px dashed #ff88a0;
+.caso ul {
+  background-color: #fff0f3;
   padding: 10px;
-  margin-bottom: 20px;
-  width: 80%;
-  border-radius: 8px;
-}
-
-#contenido, #opciones {
-  margin: 20px;
+  border-radius: 6px;
 }
